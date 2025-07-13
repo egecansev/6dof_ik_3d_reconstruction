@@ -16,7 +16,7 @@ Together, they enable detecting an object in 3D space and computing joint config
 - Supports:
   - **Analytical IK**: Computes multiple (up to 16) joint angle configurations for a given end-effector
   pose using a closed-form solution based on modified Denavit-Hartenberg parameters.
-  - **Numerical IK: **Uses a damped least squares iterative method to find a joint solution starting from an initial guess.
+  - **Numerical IK**: Uses a damped least squares iterative method to find a joint solution starting from an initial guess.
 - Includes forward kinematics, Jacobian computation, and validation.
 
 ### Note on Analytical IK Solver Accuracy
