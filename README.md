@@ -14,7 +14,7 @@ Together, they enable detecting an object in 3D space and computing joint config
 ### 6-DOF Gantry IK
 - Extracts **Modified DH parameters** from a URDF robot model.
 - Supports:
-  - **Analytical IK** (8–16 configurations)
+  - **Analytical IK** (Up to 16 configurations)
   - **Numerical IK** (Damped Least Squares)
 - Includes forward kinematics, Jacobian computation, and validation.
 
