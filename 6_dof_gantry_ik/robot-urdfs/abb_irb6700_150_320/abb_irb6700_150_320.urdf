@@ -1,0 +1,161 @@
+<?xml version="1.0" ?>
+<robot a1="0.320" a2="-0.200" acceleration_factor="2" b="0.0" c1="0.780" c2="1.280" c3="1.5925" c4="0.200" control_rate="250" display_name="ABB IRB6700 150/320" ik="analytic" jerk_factor="64" name="ABBIRB6700150320" offsets2="-M_PI / 2">
+  <!-- link list -->
+  <link name="base_link">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/base_link.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/base_link.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_1">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_1.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_1.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_2">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_2.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_2.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_3">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_3.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_3.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_4">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_4.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_4.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_5">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_5.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_5.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_6">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_6.obj"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_6.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- end of link list -->
+  <!-- joint list -->
+  <joint name="joint_1" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.780"/>
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <limit default="0" effort="0" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="1.7453292519943295"/>
+  </joint>
+  <joint name="joint_2" type="revolute">
+    <origin rpy="0 0 0" xyz="0.320 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <limit default="0" effort="0" lower="-1.1344640137963142" upper="1.4835298641951802" velocity="1.5707963267948966"/>
+  </joint>
+  <joint name="joint_3" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 1.280"/>
+    <axis xyz="0 1 0"/>
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <limit default="0" effort="0" lower="-3.141592653589793" upper="1.2217304763960306" velocity="1.5707963267948966"/>
+  </joint>
+  <joint name="joint_4" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.200"/>
+    <axis xyz="1 0 0"/>
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <limit default="0" effort="0" lower="-5.235987755982989" upper="5.235987755982989" velocity="2.9670597283903604"/>
+  </joint>
+  <joint name="joint_5" type="revolute">
+    <origin rpy="0 0 0" xyz="1.5925 0 0 "/>
+    <axis xyz="0 1 0"/>
+    <parent link="link_4"/>
+    <child link="link_5"/>
+    <limit default="0" effort="0" lower="-2.2689280275926285" upper="2.2689280275926285" velocity="2.0943951023931953"/>
+  </joint>
+  <joint name="joint_6" type="revolute">
+    <origin rpy="0 0 0" xyz="0.200 0 0 "/>
+    <axis xyz="1 0 0"/>
+    <parent link="link_5"/>
+    <child link="link_6"/>
+    <limit default="0" effort="0" lower="-6.283185307179586" upper="6.283185307179586" velocity="3.3161255787892263"/>
+  </joint>
+  <!-- end of joint list -->
+  <!-- ROS-Industrial 'flange' frame: attachment point for EEF models -->
+  <link name="flange"/>
+  <joint name="joint_6-flange" type="fixed">
+    <origin rpy="0 1.5707963267948966 0" xyz="0 0 0"/>
+    <parent link="link_6"/>
+    <child link="flange"/>
+  </joint>
+</robot>

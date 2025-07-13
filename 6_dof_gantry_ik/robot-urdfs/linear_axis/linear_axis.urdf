@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot name="Linear Axis">
+  <link name="base_link">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/base_link.obj"/>
+      </geometry>
+      <material>
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/base_link.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="link_1">
+    <collision name="collision">
+      <geometry>
+        <mesh filename="meshes/collision/link_1.obj"/>
+      </geometry>
+      <material>
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="meshes/visual/link_1.glb"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- end of link list -->
+  <!-- joint list -->
+  <joint name="joint1" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <limit effort="1000" lower="-0.41" upper="7.3" velocity="1.0"/>
+  </joint>
+  <!-- end of joint list -->
+  <!-- ROS-Industrial 'flange' frame: attachment point for EEF models -->
+  <link name="flange"/>
+  <joint name="joint1-flange" type="fixed">
+    <origin rpy="0 0 0" xyz="0.6 0.43 0.55"/>
+    <parent link="link_1"/>
+    <child link="flange"/>
+  </joint>
+</robot>
