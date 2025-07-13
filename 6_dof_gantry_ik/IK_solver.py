@@ -1,7 +1,6 @@
 from urdfpy import URDF
 import numpy as np
 from scipy.spatial.transform import Rotation
-import matplotlib.pyplot as plt
 
 
 def pose_to_transform(pose):
@@ -238,16 +237,27 @@ def forward_kinematics(joint_angles, dh_table):
 
 
 def check_ik_solutions(solutions, Td, dh_table, tol=1e-4):
+    valid_count = 0
+    valid_configs = []
     for idx, sol in enumerate(solutions):
         T_fk = forward_kinematics(sol, dh_table)
         pos_error = np.linalg.norm(T_fk[:3, 3] - Td[:3, 3])
         rot_error = np.linalg.norm(T_fk[:3, :3] - Td[:3, :3])
 
         sol_deg = np.round(np.degrees(sol), 2)
-        config = f"Config {idx + 1} (degrees)"
-        print(f"{config}: {sol_deg.tolist()}")
+        config = f"Config {idx + 1}"
+        print(f"{config} (degrees): {sol_deg.tolist()}")
         print(f"{config} - Pos Error: {pos_error:.6f}, Rot Error: {rot_error:.6f}")
 
+        if pos_error < tol and rot_error < tol:
+            valid_count += 1
+            valid_configs.append(idx + 1)
+
+    print(f"\nNumber of valid IK configurations with zero error: {valid_count} out of {len(solutions)}\n")
+    if valid_configs:
+        print(f"Valid configurations: {', '.join('Config ' + str(c) for c in valid_configs)}\n")
+    else:
+        print("No valid configurations found.\n")
 
 def generate_random_pose(x_range=(-1.2, 1.2),
                          y_range=(-1.0, 1.0),
@@ -331,7 +341,26 @@ def numerical_ik(target_T, dh_table, q_init=None, max_iters=100, tol=1e-4, dampi
 
 if __name__ == "__main__":
 
-    pose = generate_random_pose()
+    use_custom_pose = input("Do you want to input your own pose? (y/n): ").strip().lower()
+    if use_custom_pose == 'y':
+        try:
+            user_input = input(
+                "Enter 6 values separated by space (x y z in meters, roll pitch yaw in degrees): "
+            )
+            values = list(map(float, user_input.split()))
+            if len(values) != 6:
+                raise ValueError("You must enter exactly 6 numeric values.")
+
+            # Convert Euler angles from degrees to radians
+            pose = [
+                values[0], values[1], values[2],
+                np.radians(values[3]), np.radians(values[4]), np.radians(values[5])
+            ]
+        except Exception as e:
+            print(f"Invalid input: {e}. Using a random pose instead.")
+            pose = generate_random_pose()
+    else:
+        pose = generate_random_pose()
 
     print("Random Pose:", np.round(pose, 3))
 
